@@ -10,13 +10,27 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^3.3.1",
+		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/kit": "^2.17.2",
-		"@sveltejs/vite-plugin-svelte": "^4.0.4",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"daisyui": "5.0.0-beta.8",
 		"svelte": "^5.20.2",
 		"svelte-check": "^4.1.4",
 		"typescript": "^5.7.3",
-		"vite": "^5.4.14"
+		"vite": "^6.1.1"
 	},
-	"packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
+	"packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
+	"dependencies": {
+		"@tailwindcss/vite": "^4.0.7",
+		"tailwindcss": "^4.0.7",
+		"wx-svelte-core": "^2.1.0",
+		"wx-svelte-grid": "^2.1.0",
+		"wx-svelte-menu": "^2.1.0",
+		"wx-svelte-toolbar": "^2.1.0"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	}
 }
