@@ -1,64 +1,61 @@
 <script lang="ts">
     import { setContext } from "svelte";
+    import type { Snippet } from "svelte";
+    import type { NodeOpts } from "./types.ts";
+    import { Line } from "./line.svelte.ts";
 
-    let src_dot = $state()
-    let target_dot = $state()
-    let line = $state()
-    let line_label = $state()
-    let options = $state()
 
-    let lines = $state([])
+    type Props = {
+        children: Snippet
+    }
+
+    let {
+        children
+    }: Props = $props()
+
+    let lines: Line[] = $state([])
 
     setContext("pointer-canvas", {
-        src_dot: () => src_dot, 
-        set_src_dot: (dot: HTMLElement) => src_dot = dot,
-        target_dot: () => target_dot, 
-        set_target_dot: (dot: HTMLElement) => target_dot = dot,
-        line: () => line, 
-        set_line: (line: HTMLElement) => line = line,
-        line_label: () => line_label, 
-        set_line_label: (label: HTMLElement) => line_label = label,
-
-        add_line: (src, dst) => { lines.push({ src, dst }); return lines.length - 1; },
-        rm_line: n => { lines.splice(n, 1); },
-        
-        options: () => options,
-        set_options: (vals: unknown[]) => options = vals
+        add_line: (src: NodeOpts, dst: NodeOpts, label: string, ...rest: unknown[]) => { 
+            lines.push(new Line(src, dst, label, ...rest)); 
+            return lines.length - 1; 
+        },
+        rm_line: (n: number) => { n >= 0 && lines.splice(n, 1); },
     })
+
+
 </script>
 
 {#each lines as line, i}
-    <div bind:this={line.src} class="src dot line-{i}"></div>
-    <div bind:this={line.dst} class="dst dot line-{i}"></div>
-    <div bind:this={line.line} class="line line-{i}"><span class="line-label line-{i}"></span></div>
+    {#if line.src.draw}
+        <div id={`pc-src-dot-${i}`} 
+            class="src dot line-{i}"   
+            style={line.src_styles()}
+        ></div>
+    {/if}
+    {#if line.dst.draw}
+        <div id={`pc-dst-dot-${i}`} 
+            class="dst dot line-{i}"
+            style={line.dst_styles()}
+        ></div>
+    {/if}
+    <div id={`pc-line-${i}`} class="line line-{i}"
+         style={line.line_styles()}>
+        {#if line.label}
+            <span id={`pc-line-label-${i}`} style="border-color: {line.color}" class="line-label line-{i}">{line.label}</span>
+        {/if}
+    </div>
 {/each}
 
+{@render children?.()}
 
 <style>
-    .dot {
-        width: 10px;
-        height: 10px;
-        background-color: blue;
-        border-radius: 50%;
-        outline: 2px solid blue;
-        outline-offset: 2px;
-        position: absolute;
-        z-index: 1000;
-    }
-
-    .line {
-        position: absolute;
-        width: 2px;
-        height: 100px;
-        z-index: 1000;
-        text-align: center;
-        background-color: blue;
-    }
-
-    #line-label {
+    .line-label {
+        font-family: verdana;
+        font-size: 12px;
         position: relative;
-        top: -.5em;
-        line-height: 1em;
+        top: -.75em;
+        line-height: 12px;
         border: 1px solid blue;
         border-radius: 0.5em;
         padding: 0.1em 0.5em;

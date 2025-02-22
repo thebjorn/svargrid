@@ -41,7 +41,7 @@
         { id: "delete", text: "Delete", icon: "wxi-delete-outline" },
     ];
 
-    let title = $state()
+    let title = $state(null)
 </script>
   
 
@@ -86,8 +86,9 @@
 
     <!-- <Calendar value={new Date()} /> -->
 </main>
-<Pointer src={title}
-         target={`[data-row-id="3"][data-col-id="price"]`}
+<Pointer src={{selector: `[data-row-id="5"][data-col-id="type"]`, draw: true}}
+         target={{selector: `[data-row-id="1"][data-col-id="name"]`, draw: true}}
+         color="green"
          label="Hello"/>
 
 <style lang="postcss">

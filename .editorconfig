@@ -1,0 +1,7 @@
+# set 4 spaces, nl line endings, empty lines at end of file
+[*]
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
